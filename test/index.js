@@ -29,6 +29,7 @@ tape("bcrypt.hashSync(s, salt)", function(assert) {
     var hash = bcrypt.hashSync("password", SALT);
     assert.equal(hash.length, 60);
     assert.equal(hash.charAt(0), '$');
+    assert.equal(hash.slice(29), HASH.slice(29));
     assert.end();
 });
 tape("bcrypt.hash(s, salt, callback)", function(assert) {
@@ -38,6 +39,7 @@ tape("bcrypt.hash(s, salt, callback)", function(assert) {
         } else {
             assert.equal(hash.length, 60);
             assert.equal(hash.charAt(0), '$');
+            assert.equal(hash.slice(29), HASH.slice(29));
             assert.end();
         }
     });
