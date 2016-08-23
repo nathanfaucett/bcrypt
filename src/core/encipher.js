@@ -7,7 +7,7 @@ module.exports = encipher;
 function encipher(lr, off, P, S) {
     var l = lr[off],
         r = lr[off + 1],
-        i = -1,
+        i = 0,
         k = BLOWFISH_NUM_ROUNDS - 1,
         n;
 
