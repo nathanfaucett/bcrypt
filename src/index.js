@@ -12,3 +12,6 @@ bcrypt.compare = require("./compare");
 
 bcrypt.getRounds = require("./getRounds");
 bcrypt.getSalt = require("./getSalt");
+
+bcrypt.base64Encode = require("./base64/encode");
+bcrypt.base64Decode = require("./base64/decode");

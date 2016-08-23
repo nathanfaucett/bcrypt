@@ -18,30 +18,15 @@ function genSalt(rounds, seedLength, callback) {
         rounds = GENSALT_DEFAULT_LOG2_ROUNDS;
     }
 
-    function asyncFn(callback) {
-        process.nextTick(function onNextTick() {
-            if (!isNumber(rounds)) {
-                callback(new Error("Illegal arguments: " + (typeof rounds)));
-                return;
-            }
-
-            try {
-                callback(null, genSaltSync(rounds));
-            } catch (error) {
-                callback(error);
-            }
-        });
-    }
-
     if (callback) {
         if (!isFunction(callback)) {
             throw new Error("Illegal callback: " + typeof(callback));
         } else {
-            asyncFn(callback);
+            genSaltAsync(rounds, callback);
         }
     } else {
         return new Promise(function resolver(resolve, reject) {
-            asyncFn(function onAsyncSalt(error, res) {
+            genSaltAsync(rounds, function onAsyncSalt(error, res) {
                 if (error) {
                     reject(error);
                     return;
@@ -50,4 +35,19 @@ function genSalt(rounds, seedLength, callback) {
             });
         });
     }
+}
+
+function genSaltAsync(rounds, callback) {
+    process.nextTick(function onNextTick() {
+        if (!isNumber(rounds)) {
+            callback(new Error("Illegal arguments: " + (typeof rounds)));
+            return;
+        }
+
+        try {
+            callback(null, genSaltSync(rounds));
+        } catch (error) {
+            callback(error);
+        }
+    });
 }

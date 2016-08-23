@@ -28,7 +28,7 @@ function base64Decode(s, len) {
         }
         o = (c1 << 2) >>> 0;
         o |= (c2 & 0x30) >> 4;
-        rs.push(stringFromCharCode(o));
+        rs[rs.length] = stringFromCharCode(o);
         if (++olen >= len || off >= slen) {
             break;
         }
@@ -39,7 +39,7 @@ function base64Decode(s, len) {
         }
         o = ((c2 & 0x0f) << 4) >>> 0;
         o |= (c3 & 0x3c) >> 2;
-        rs.push(stringFromCharCode(o));
+        rs[rs.length] = stringFromCharCode(o);
         if (++olen >= len || off >= slen) {
             break;
         }
@@ -47,12 +47,12 @@ function base64Decode(s, len) {
         c4 = code < BASE64_INDEX.length ? BASE64_INDEX[code] : -1;
         o = ((c3 & 0x03) << 6) >>> 0;
         o |= c4;
-        rs.push(stringFromCharCode(o));
+        rs[rs.length] = stringFromCharCode(o);
         ++olen;
     }
     res = [];
     for (off = 0; off < olen; off++) {
-        res.push(rs[off].charCodeAt(0));
+        res[res.length] = rs[off].charCodeAt(0);
     }
     return res;
 }

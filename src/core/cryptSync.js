@@ -46,10 +46,10 @@ function cryptSync(b, salt, rounds) {
             ret = [];
 
             for (i = 0; i < clen; i++) {
-                ret.push(((cdata[i] >> 24) & 0xff) >>> 0);
-                ret.push(((cdata[i] >> 16) & 0xff) >>> 0);
-                ret.push(((cdata[i] >> 8) & 0xff) >>> 0);
-                ret.push((cdata[i] & 0xff) >>> 0);
+                ret[ret.length] = ((cdata[i] >> 24) & 0xff) >>> 0;
+                ret[ret.length] = ((cdata[i] >> 16) & 0xff) >>> 0;
+                ret[ret.length] = ((cdata[i] >> 8) & 0xff) >>> 0;
+                ret[ret.length] = (cdata[i] & 0xff) >>> 0;
             }
 
             return ret;

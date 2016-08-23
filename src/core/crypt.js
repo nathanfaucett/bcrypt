@@ -52,6 +52,8 @@ function crypt(b, salt, rounds, callback, progressCallback) {
                     break;
                 }
             }
+
+            process.nextTick(next);
         } else {
             for (i = 0; i < 64; i++) {
                 for (j = 0; j < (clen >> 1); j++) {
@@ -61,16 +63,13 @@ function crypt(b, salt, rounds, callback, progressCallback) {
             ret = [];
 
             for (i = 0; i < clen; i++) {
-                ret.push(((cdata[i] >> 24) & 0xff) >>> 0);
-                ret.push(((cdata[i] >> 16) & 0xff) >>> 0);
-                ret.push(((cdata[i] >> 8) & 0xff) >>> 0);
-                ret.push((cdata[i] & 0xff) >>> 0);
+                ret[ret.length] = ((cdata[i] >> 24) & 0xff) >>> 0;
+                ret[ret.length] = ((cdata[i] >> 16) & 0xff) >>> 0;
+                ret[ret.length] = ((cdata[i] >> 8) & 0xff) >>> 0;
+                ret[ret.length] = (cdata[i] & 0xff) >>> 0;
             }
 
             callback(null, ret);
-            return;
         }
-
-        process.nextTick(next);
     }());
 }
